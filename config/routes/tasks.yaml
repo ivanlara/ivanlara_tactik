@@ -1,0 +1,35 @@
+# Route for listing tasks
+app_task_index:
+    path: /
+    controller: App\Controller\TaskController::index
+    methods: GET
+
+# Route for creating a new task
+app_task_new:
+    path: /task/new
+    controller: App\Controller\TaskController::new
+    methods: [GET, POST]
+
+# Route for showing a specific task
+app_task_show:
+    path: /task/{id}
+    controller: App\Controller\TaskController::show
+    methods: GET
+    requirements:
+        id: '\d+'
+
+# Route for editing a specific task
+app_task_edit:
+    path: /task/{id}/edit
+    controller: App\Controller\TaskController::edit
+    methods: [GET, POST]
+    requirements:
+        id: '\d+'
+
+# Route for deleting a specific task
+app_task_delete:
+    path: /task/{id}
+    controller: App\Controller\TaskController::delete
+    methods: POST
+    requirements:
+        id: '\d+'
