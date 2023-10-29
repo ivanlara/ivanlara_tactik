@@ -3,43 +3,41 @@
 {% block title %}Task index{% endblock %}
 
 {% block body %}
-    <h1>Task index</h1>
+<div class="container mt-5">
+    <h1 class="mb-4">Task Index</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Title</th>
-                <th>Description</th>
-                <th>Created_at</th>
-                <th>Updated_at</th>
-                <th>Starting_date</th>
-                <th>Due_date</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for task in tasks %}
-            <tr>
-                <td>{{ task.id }}</td>
-                <td>{{ task.title }}</td>
-                <td>{{ task.description }}</td>
-                <td>{{ task.createdAt ? task.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ task.updatedAt ? task.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ task.startingDate ? task.startingDate|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ task.dueDate ? task.dueDate|date('Y-m-d H:i:s') : '' }}</td>
-                <td>
-                    <a href="{{ path('app_task_show', {'id': task.id}) }}">show</a>
-                    <a href="{{ path('app_task_edit', {'id': task.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="8">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    {% if tasks|length > 0 %}
+        <table class="table table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Title</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Starting Date</th>
+                    <th scope="col">Due Date</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for task in tasks %}
+                <tr>
+                    <th scope="row">{{ task.title }}</th>
+                    <td>{{ task.description }}</td>
+                    <td>{{ task.startingDate ? task.startingDate|date('Y-m-d H:i:s') : 'N/A' }}</td>
+                    <td>{{ task.dueDate ? task.dueDate|date('Y-m-d H:i:s') : 'N/A' }}</td>
+                    <td>
+                        <a href="{{ path('app_task_show', {'id': task.id}) }}" class="btn btn-info btn-sm">Show</a>
+                        <a href="{{ path('app_task_edit', {'id': task.id}) }}" class="btn btn-primary btn-sm">Edit</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div class="alert alert-warning" role="alert">
+            No tasks found, you can create one by clicking the button below.
+        </div>
+    {% endif %}
 
-    <a href="{{ path('app_task_new') }}">Create new</a>
+    <a href="{{ path('app_task_new') }}" class="btn btn-success">Create New Task</a>
+</div>
 {% endblock %}

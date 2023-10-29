@@ -1,4 +1,47 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': 'novalidate'}}) }}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 mx-auto">
+            <div class="mb-3">
+                {{ form_label(form.title, 'Title', {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.title, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.title) }}
+            </div>
+
+            <div class="mb-3">
+                {{ form_label(form.description, 'Description', {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.description) }}
+            </div>
+
+            <div class="mb-3">
+                {{ form_label(form.starting_date, 'Starting Date', {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.starting_date, {'attr': {'class': 'form-control datepicker', 'data-provide': 'datepicker'}}) }}
+                {{ form_errors(form.starting_date) }}
+            </div>
+
+            <div class="mb-3">
+                {{ form_label(form.due_date, 'Due Date', {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.due_date, {'attr': {'class': 'form-control datepicker', 'data-provide': 'datepicker'}}) }}
+                {{ form_errors(form.due_date) }}
+            </div>
+
+            <div class="mb-3">        
+                <button type="submit" class="btn btn-outline-success">{{ button_label|default('Save') }}</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
 {{ form_end(form) }}
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.datepicker').datepicker({
+            format: 'dd-mm-yyyy', // or the date format you prefer
+            autoclose: true // closes the datepicker automatically after selection
+        });
+    });
+</script>

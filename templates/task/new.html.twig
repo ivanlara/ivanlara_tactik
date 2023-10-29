@@ -7,5 +7,7 @@
 
     {{ include('task/_form.html.twig') }}
 
-    <a href="{{ path('app_task_index') }}">back to list</a>
+    <div class="mb-3">
+        <a href="{{ path('app_task_index') }}" class="btn btn-outline-secondary">Back to list</a>
+    </div>
 {% endblock %}
