@@ -22,6 +22,7 @@ class TaskType extends AbstractType
                 'input' => 'datetime_immutable',
                 'attr' => ['class' => 'datepicker'],
                 'html5' => false,
+                'required' => false
             ])
             ->add('due_date', DateType::class, [
                 'widget' => 'single_text',
@@ -29,6 +30,7 @@ class TaskType extends AbstractType
                 'input' => 'datetime_immutable',
                 'attr' => ['class' => 'datepicker'],
                 'html5' => false,
+                'required' => false
             ])
             // ->add('isCompleted', CheckboxType::class, [
             //     'label'    => 'Completed',
