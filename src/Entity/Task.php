@@ -29,6 +29,11 @@ class Task
     private $description;
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isCompleted = false;
+
+    /**
      * @ORM\Column(type="datetime_immutable")
      */
     private $created_at;
@@ -122,6 +127,17 @@ class Task
     {
         $this->due_date = $due_date;
 
+        return $this;
+    }
+
+    public function getIsCompleted(): ?bool
+    {
+        return $this->isCompleted;
+    }
+
+    public function setIsCompleted(bool $isCompleted): self
+    {
+        $this->isCompleted = $isCompleted;
         return $this;
     }
 

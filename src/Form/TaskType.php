@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Task;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -28,6 +29,10 @@ class TaskType extends AbstractType
                 'input' => 'datetime_immutable',
                 'attr' => ['class' => 'datepicker'],
                 'html5' => false,
+            ])
+            ->add('isCompleted', CheckboxType::class, [
+                'label'    => 'Completed',
+                'required' => false,
             ])
         ;
     }

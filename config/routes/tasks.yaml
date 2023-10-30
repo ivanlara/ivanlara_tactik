@@ -33,3 +33,11 @@ app_task_delete:
     methods: POST
     requirements:
         id: '\d+'
+
+# Route for completing a specific task
+app_task_toggle:
+    path: /task/{id}/toggle
+    controller: App\Controller\TaskController::toggleCompletion
+    methods: POST
+    requirements:
+        id: '\d+'

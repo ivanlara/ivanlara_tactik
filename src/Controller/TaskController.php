@@ -8,6 +8,8 @@ use App\Repository\TaskRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Routing\Annotation\Route;
 
 
@@ -68,5 +70,26 @@ class TaskController extends AbstractController
         }
 
         return $this->redirectToRoute('app_task_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    public function toggleCompletion(Request $request, Task $task): JsonResponse
+    {
+        // Cross-Site Request Forgery validation
+        $csrfTokenFromHeader = $request->headers->get('X-CSRF-TOKEN');
+        $token = new CsrfToken('task_toggle', $csrfTokenFromHeader);
+    
+        if (!$this->get('security.csrf.token_manager')->isTokenValid($token)) {
+            return new JsonResponse(['success' => false, 'message' => 'Invalid CSRF token.']);
+        }
+    
+        $task->setIsCompleted(!$task->getIsCompleted());
+        
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->flush();
+        
+        return new JsonResponse([
+            'success' => true,
+            'isCompleted' => $task->getIsCompleted(),
+        ]);
     }
 }

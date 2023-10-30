@@ -1,3 +1,5 @@
+{% set csrf_token = csrf_token('task_toggle') %}
+
 {% extends 'base.html.twig' %}
 
 {% block title %}Task index{% endblock %}
@@ -10,6 +12,7 @@
         <table class="table table-striped">
             <thead class="thead-dark">
                 <tr>
+                    <th scope="col"></th> 
                     <th scope="col">Title</th>
                     <th scope="col">Description</th>
                     <th scope="col">Starting Date</th>
@@ -20,6 +23,12 @@
             <tbody>
             {% for task in tasks %}
                 <tr>
+                    <td>
+                        <input type="checkbox" class="toggle-completion" 
+                               data-task-id="{{ task.id }}"
+                               data-csrf-token="{{ csrf_token }}"
+                               {% if task.isCompleted %}checked{% endif %}>
+                    </td>
                     <th scope="row">{{ task.title }}</th>
                     <td>{{ task.description }}</td>
                     <td>{{ task.startingDate ? task.startingDate|date('Y-m-d H:i:s') : 'N/A' }}</td>
@@ -40,4 +49,27 @@
 
     <a href="{{ path('app_task_new') }}" class="btn btn-success">Create New Task</a>
 </div>
+
+<script>
+    document.querySelectorAll('.toggle-completion').forEach(checkbox => {
+        checkbox.addEventListener('change', (e) => {
+            let taskId = e.target.getAttribute('data-task-id');
+            let csrfToken = e.target.getAttribute('data-csrf-token');
+            fetch(`/task/${taskId}/toggle`, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': csrfToken
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // 
+                }
+            });
+        });
+    });
+</script>
 {% endblock %}
