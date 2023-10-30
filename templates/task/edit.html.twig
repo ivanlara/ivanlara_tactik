@@ -1,16 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Task{% endblock %}
+{% block title %}{{'Edit task'|trans}}{% endblock %}
 
 {% block body %}
-    <h1>Edit Task</h1>
-
+<div class="container mt-5">
+    <h1 class="mb-4">{{'Edit task'|trans}}</h1>
     {{ include('task/_form.html.twig', {'button_label': 'Update'}) }}
-
     <div class="mb-3">
-        <a href="{{ path('app_task_index') }}" class="btn btn-outline-secondary">Back to list</a>
+        <a href="{{ path('app_task_index') }}" class="btn btn-outline-secondary mr-2">{{'Back to list'|trans}}</a>
         <div style="display: inline-block;">
             {{ include('task/_delete_form.html.twig') }}
         </div>
     </div>
+</div>
 {% endblock %}

@@ -30,10 +30,10 @@ class TaskType extends AbstractType
                 'attr' => ['class' => 'datepicker'],
                 'html5' => false,
             ])
-            ->add('isCompleted', CheckboxType::class, [
-                'label'    => 'Completed',
-                'required' => false,
-            ])
+            // ->add('isCompleted', CheckboxType::class, [
+            //     'label'    => 'Completed',
+            //     'required' => false,
+            // ])
         ;
     }
 

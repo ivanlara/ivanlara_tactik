@@ -2,52 +2,42 @@
 
 {% extends 'base.html.twig' %}
 
-{% block title %}Task index{% endblock %}
+{% block title %}{{'Tasks'|trans}}{% endblock %}
 
 {% block body %}
 <div class="container mt-5">
-    <h1 class="mb-4">Task Index</h1>
+    <h1 class="mb-4">{{'Tasks'|trans}}</h1>
 
     {% if tasks|length > 0 %}
-        <table class="table table-striped">
-            <thead class="thead-dark">
-                <tr>
-                    <th scope="col"></th> 
-                    <th scope="col">Title</th>
-                    <th scope="col">Description</th>
-                    <th scope="col">Starting Date</th>
-                    <th scope="col">Due Date</th>
-                    <th scope="col">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-            {% for task in tasks %}
-                <tr>
-                    <td>
-                        <input type="checkbox" class="toggle-completion" 
-                               data-task-id="{{ task.id }}"
-                               data-csrf-token="{{ csrf_token }}"
-                               {% if task.isCompleted %}checked{% endif %}>
-                    </td>
-                    <th scope="row">{{ task.title }}</th>
-                    <td>{{ task.description }}</td>
-                    <td>{{ task.startingDate ? task.startingDate|date('Y-m-d H:i:s') : 'N/A' }}</td>
-                    <td>{{ task.dueDate ? task.dueDate|date('Y-m-d H:i:s') : 'N/A' }}</td>
-                    <td>
-                        <a href="{{ path('app_task_show', {'id': task.id}) }}" class="btn btn-info btn-sm">Show</a>
-                        <a href="{{ path('app_task_edit', {'id': task.id}) }}" class="btn btn-primary btn-sm">Edit</a>
-                    </td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+        {% for task in tasks %}
+            <div class="d-flex align-items-center mb-2">
+                <input type="checkbox" class="toggle-completion mr-2" style="width: 24px; height: 24px;" 
+                       data-task-id="{{ task.id }}"
+                       data-csrf-token="{{ csrf_token }}"
+                       {% if task.isCompleted %}checked{% endif %}>
+
+                <div class="flex-grow-1">
+                    <a href="{{ path('app_task_show', {'id': task.id}) }}" class="d-block">
+                        <strong>{{ task.title }}</strong>
+                    </a>
+                    <small class="text-muted d-block">{{ task.description }}</small>
+                    <small class="text-muted d-block">
+                        {{ task.startingDate ? task.startingDate|date('M j, Y') : 'N/A' }} - 
+                        {{ task.dueDate ? task.dueDate|date('M j, Y') : 'N/A' }}
+                    </small>
+                </div>
+            </div>
+            {% if not loop.last %}
+                <hr>
+            {% endif %}
+        {% endfor %}
     {% else %}
         <div class="alert alert-warning" role="alert">
             No tasks found, you can create one by clicking the button below.
         </div>
     {% endif %}
 
-    <a href="{{ path('app_task_new') }}" class="btn btn-success">Create New Task</a>
+    <a href="{{ path('app_task_new') }}" class="btn btn-success mt-3">{{'Create'|trans}}</a>
 </div>
 
 <script>

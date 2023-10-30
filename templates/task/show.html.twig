@@ -1,46 +1,27 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Task{% endblock %}
+{% block title %}{{'Task details'|trans}}{% endblock %}
 
 {% block body %}
-
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 mx-auto">
-            <h1>Task</h1>
-
-            <table class="table">
-                <tbody>
-                    <tr>
-                        <th>Title</th>
-                        <td>{{ task.title }}</td>
-                    </tr>
-                    <tr>
-                        <th>Description</th>
-                        <td>{{ task.description }}</td>
-                    </tr>
-                    <tr>
-                        <th>Starting_date</th>
-                        <td>{{ task.startingDate ? task.startingDate|date('Y-m-d H:i:s') : '' }}</td>
-                    </tr>
-                    <tr>
-                        <th>Due_date</th>
-                        <td>{{ task.dueDate ? task.dueDate|date('Y-m-d H:i:s') : '' }}</td>
-                    </tr>
-                </tbody>
-            </table>
+<div class="container mt-5">
+    <h1 class="mb-4">{{'Task details'|trans}}</h1>
+    <div class="d-flex flex-column align-items-start mb-4">
+        <strong class="d-block mb-2">{{'Title'|trans}}: {{ task.title }}</strong>
+        <small class="text-muted mb-2">{{'Description'|trans}}: {{ task.description }}</small>
+        <small class="text-muted mb-2">
+            {{'Starting date'|trans}}: {{ task.startingDate ? task.startingDate|date('F j, Y') : 'N/A' }}
+        </small>
+        <small class="text-muted mb-2">
+            {{'Due date'|trans}}: {{ task.dueDate ? task.dueDate|date('F j, Y') : 'N/A' }}
+        </small>
+    </div>
+    
+    <div class="mb-3">
+        <a href="{{ path('app_task_index') }}" class="btn btn-outline-secondary mr-2">{{'Back to list'|trans}}</a>
+        <a href="{{ path('app_task_edit', {'id': task.id}) }}" class="btn btn-outline-primary mr-2">{{'Edit'|trans}}</a>
+        <div style="display: inline-block;">
+            {{ include('task/_delete_form.html.twig') }}
         </div>
     </div>
-
-    <div class="row">
-        <div class="col-md-8 mx-auto">
-            <div class="mb-3">
-                <a href="{{ path('app_task_index') }}" class="btn btn-outline-secondary">Back to list</a>
-                <a href="{{ path('app_task_edit', {'id': task.id}) }}" class="btn btn-outline-primary">Edit</a>
-                <div style="display: inline-block;">
-                    {{ include('task/_delete_form.html.twig') }}
-                </div>
-            </div>
-        </div>
-    </div>
+</div>
 {% endblock %}
